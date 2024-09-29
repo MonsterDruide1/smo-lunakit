@@ -8,6 +8,9 @@
 DevGuiSettings::DevGuiSettings(DevGuiManager* parent)
 {
     Logger::log("Starting settings menu constructor\n");
+    Logger::log("acos(-1.0f): %1.20f\n", sead::Mathf::acos(-1.0f));
+    Logger::log("PI         : %1.20f\n", sead::Mathf::pi());
+    Logger::log("Angle      : %1.20f\n", sead::Mathf::rad2deg(sead::Mathf::acos(-1.0f)));
 
     mParent = parent;
 

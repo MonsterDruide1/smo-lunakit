@@ -7,6 +7,8 @@
 #include <thread/seadThreadLocalStorage.h>
 #include <utility>
 
+#define ACNT(arr) (sizeof(arr) / sizeof(arr[0]))
+
 namespace handler {
     char handlerStack[0x20000] = {};
     CatchFunc handlerFunc = nullptr;

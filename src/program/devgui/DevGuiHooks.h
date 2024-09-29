@@ -1,5 +1,6 @@
 #pragma once
 
+#include "research/ResearchHooks.h"
 #include "settings/SettingsHooks.h"
 #include "windows/Graphics/GraphicsHooks.h"
 #include "windows/StagePause/StagePauseHooks.h"

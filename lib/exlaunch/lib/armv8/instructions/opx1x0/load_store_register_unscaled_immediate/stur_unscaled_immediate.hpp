@@ -13,8 +13,8 @@ namespace exl::armv8::inst {
             return 0b10 | rt.Is64();
         }
 
-        constexpr SturUnscaledImmediate(reg::Register rt, reg::Register rn, u16 imm12 = 0) : LoadStoreRegisterUnscaledImmediate(
-            GetSize(rt), V, Opc, imm12, rn, rt
+        constexpr SturUnscaledImmediate(reg::Register rt, reg::Register rn, u16 imm9 = 0) : LoadStoreRegisterUnscaledImmediate(
+            GetSize(rt), V, Opc, imm9, rn, rt
         ) {}
     };
 

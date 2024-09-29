@@ -16,7 +16,8 @@
     "cstdarg": "cpp",
     "xlocinfo": "cpp",
     "xstring": "cpp",
-    "ranges": "cpp"
+    "ranges": "cpp",
+    "typeinfo": "cpp"
   },
   "cmake.configureOnOpen": false,
   "C_Cpp.errorSquiggles": "Enabled"

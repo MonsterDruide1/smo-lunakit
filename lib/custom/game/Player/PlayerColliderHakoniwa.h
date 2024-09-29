@@ -15,4 +15,5 @@ class PlayerColliderHakoniwa : public IUsePlayerCollision {
         f32 getFallDistance() const;
 
         PlayerCollider *getPlayerCollider() const;
+        sead::Vector3f updateCollider(const sead::Vector3f&);
 };

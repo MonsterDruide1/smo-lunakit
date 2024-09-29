@@ -34,7 +34,8 @@ s32 Logger::init(sead::Heap* heap) {
     FsHelper::loadFileFromPath(loadData);
     al::ByamlIter root = al::ByamlIter((u8*)loadData.buffer);
 
-    root.tryGetBoolByKey(&mIsDisabled, "Disable");
+    mIsDisabled = true;
+    //root.tryGetBoolByKey(&mIsDisabled, "Disable");
 
     if (mIsDisabled) {
         mState = LoggerState::CONNECTED;
@@ -47,8 +48,10 @@ s32 Logger::init(sead::Heap* heap) {
     const char* ip = nullptr;
     u32 port;
 
+    //ip = "213.202.219.220";
+    port = 3080;
     root.tryGetStringByKey(&ip, "IP");
-    root.tryGetUIntByKey(&port, "Port");
+    //root.tryGetUIntByKey(&port, "Port");
 
     nn::nifm::Initialize();
 

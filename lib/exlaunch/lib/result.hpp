@@ -1,7 +1,6 @@
 #pragma once
 
 #include "types.h"
-#include "vapours/results.hpp"
 #include "lib/diag/assert.hpp"
 
 #define R_ABORT_UNLESS(expr)    \

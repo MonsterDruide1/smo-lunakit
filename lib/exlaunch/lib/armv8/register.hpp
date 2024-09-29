@@ -1,6 +1,6 @@
 #pragma once
 
-#include <lib.hpp>
+#include <common.hpp>
 
 namespace exl::armv8::reg {
     
@@ -20,7 +20,6 @@ namespace exl::armv8::reg {
         constexpr inline bool Is32() const { return m_Kind == RegisterKind::W; }
         constexpr inline bool Is64() const { return m_Kind == RegisterKind::X; }
         constexpr inline uchar Index() const { return m_Index; }
-        constexpr inline int Width() const { return Is64() ? sizeof(uint64_t) : sizeof(uint32_t); }
     };
     static_assert(sizeof(Register) == 1, "Register");
 

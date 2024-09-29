@@ -4,4 +4,6 @@ void DevGuiHooks::exlInstallDevGuiHooks() {
     exlSetupSettingsHooks();
     exlSetupGraphicsHooks();
     exlSetupStageSceneHooks();
+
+    exlSetupResearchHooks();
 }

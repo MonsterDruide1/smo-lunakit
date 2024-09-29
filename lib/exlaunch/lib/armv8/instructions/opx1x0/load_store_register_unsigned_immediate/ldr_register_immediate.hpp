@@ -9,8 +9,12 @@ namespace exl::armv8::inst {
         static constexpr bool V = 0b0;
         static constexpr u8 Opc = 0b01;
 
+        static constexpr u8 GetSize(reg::Register rt) {
+            return 0b10 | rt.Is64();
+        }
+
         constexpr LdrRegisterImmediate(reg::Register rt, reg::Register rn, u16 imm12 = 0) : LoadStoreRegisterUnsignedImmediate(
-            0b10 | rt.Is64(), V, Opc, imm12, rn, rt
+            GetSize(rt), V, Opc, imm12, rn, rt
         ) {}
     };
 

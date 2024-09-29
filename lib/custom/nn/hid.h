@@ -293,9 +293,19 @@ namespace nn {
 
         struct NpadBaseState {
             u64 mSamplingNumber;
-            NpadButtonSet mButtons;
-            AnalogStickState mAnalogStickL;
-            AnalogStickState mAnalogStickR;
+            union {
+                long mButtonsRaw;
+                NpadButtonSet mButtons;
+            };
+            union {
+                long mAnalogStickLRaw;
+                AnalogStickState mAnalogStickL;
+            };
+            union {
+                long mAnalogStickRRaw;
+                AnalogStickState mAnalogStickR;
+            };
+
             NpadAttributeSet mAttributes;
             char reserved[4];
         };

@@ -111,6 +111,7 @@ void HomeMenuWorlds::warpToStage(GameDataHolderAccessor data, const char* stageN
     if(PlayerFunction::isPlayerDeadStatus(player))
         return;
     
+    Logger::log("\x17STAGE CHANGE: %s\n", stageName);
     ChangeStageInfo stageInfo(data.mData, "start", stageName, false, scenario, ChangeStageInfo::SubScenarioType::UNK);
     GameDataFunction::tryChangeNextStage(data, &stageInfo);
 }

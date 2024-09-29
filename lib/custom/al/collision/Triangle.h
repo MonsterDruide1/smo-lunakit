@@ -3,11 +3,10 @@
 #include "Library/Yaml/ByamlIter.h"
 #include "math/seadVector.h"
 
+namespace al {
 struct CollisionParts;
 struct KCPrismData;
 struct KCPrismHeader;
-
-namespace al {
 
 class Triangle {
 public:

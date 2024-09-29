@@ -1,0 +1,141 @@
+#include "tas.h"
+#include "game/Player/PlayerActorHakoniwa.h"
+#include "al/area/ChangeStageInfo.h"
+#include "nn/mem.h"
+#include "rs/util.hpp"
+#include "sead/prim/seadSafeString.h"
+#include "packet.h"
+#include <nn/init.h>
+#include <helpers/GetHelper.h>
+#include <Library/LiveActor/ActorPoseKeeper.h>
+#include <logger/Logger.hpp>
+
+#define alloc(SIZE) nn::init::GetAllocator()->Allocate(SIZE)
+#define dealloc(PTR) nn::init::GetAllocator()->Free(PTR)
+#define realloc(PTR, SIZE) nn::init::GetAllocator()->Reallocate(PTR, SIZE);
+
+namespace fl {
+void* memcpy (void *dest, const void *src, size_t len)
+{
+  char *d = (char*) dest;
+  const char *s = (const char*) src;
+  while (len-- > 0)
+    *d++ = *s++;
+  return dest;
+}
+}
+
+namespace smo {
+u32 OutPacketLog::calcLen() const
+{
+    return strlen(message) + 1;
+}
+void OutPacketLog::construct(u8* dst) const
+{
+    *dst = type;
+    strcpy((char*)dst + 1, message);
+}
+
+void InPacketPlayerScriptInfo::parse(const u8* data, u32 len)
+{
+    fl::TasHolder& h = fl::TasHolder::instance();
+    if (h.isRunning)
+        return;
+    scriptName = (char*)alloc(len + 1);
+    fl::memcpy(scriptName, data, len);
+    scriptName[len] = '\0';
+}
+
+void InPacketPlayerScriptInfo::on(Server& server)
+{
+    fl::TasHolder& h = fl::TasHolder::instance();
+    if (h.isRunning)
+        return;
+    h.setScriptName(scriptName);
+    if (h.frames) {
+        dealloc(h.frames);
+        h.frames = nullptr;
+    }
+    h.frameCount = 0;
+}
+
+void InPacketPlayerTeleport::parse(const u8* data, u32 len)
+{
+    pos.x = *(float*)&data[0];
+    pos.y = *(float*)&data[4];
+    pos.z = *(float*)&data[8];
+}
+
+void InPacketPlayerTeleport::on(Server& server)
+{
+    StageScene* stageScene = tryGetStageScene();
+    if (!stageScene)
+        return;
+    PlayerActorHakoniwa* player = tryGetPlayerActorHakoniwa();
+    player->startDemoPuppetable();
+    al::setTrans(player, pos);
+    player->endDemoPuppetable();
+}
+
+void InPacketPlayerGo::parse(const u8* data, u32 len)
+{
+    nn::mem::StandardAllocator* m = nn::init::GetAllocator();
+
+    scenario = *(signed char*)&data[0];
+    u8 stageLength = data[1];
+    u8 entranceLength = data[2];
+
+    stageName = (char*)m->Allocate(stageLength + 1);
+    fl::memcpy(stageName, &data[3], stageLength);
+    stageName[stageLength] = '\0';
+
+    entrance = (char*)m->Allocate(entranceLength + 1);
+    fl::memcpy(entrance, &data[3 + stageLength], entranceLength);
+    entrance[entranceLength] = '\0';
+
+    startScript = data[len - 1];
+}
+
+void InPacketPlayerGo::on(Server& server)
+{
+    nn::mem::StandardAllocator* m = nn::init::GetAllocator();
+    StageScene* stageScene = tryGetStageScene();
+    if (!stageScene) {
+        if (entrance)
+            m->Free(entrance);
+        if (stageName)
+            m->Free(stageName);
+    }
+
+    Logger::log("\x17Trigger GO! %s\n", stageName);
+    ChangeStageInfo info = ChangeStageInfo(stageScene->mGameDataHolder.mData, entrance, stageName, false, scenario, ChangeStageInfo::SubScenarioType::UNK);
+    stageScene->mGameDataHolder.mData->changeNextStage(&info, 0);
+
+    if (entrance)
+        m->Free(entrance);
+    if (stageName)
+        m->Free(stageName);
+
+    if (startScript && fl::TasHolder::instance().frames)
+        fl::TasHolder::instance().startPending = true;
+}
+
+void InPacketPlayerScriptData::parse(const u8* data, u32 len)
+{
+    fl::TasHolder& h = fl::TasHolder::instance();
+    if (h.isRunning)
+        return;
+    size_t cur = h.frameCount;
+    if (h.frames) {
+        h.frameCount += len / sizeof(fl::TasFrame);
+        h.frames = (fl::TasFrame*)realloc(h.frames, h.frameCount * sizeof(fl::TasFrame));
+    } else {
+        h.frames = (fl::TasFrame*)alloc(len);
+        h.frameCount = len / sizeof(fl::TasFrame);
+    }
+    fl::memcpy(&h.frames[cur], data, len);
+}
+
+void InPacketPlayerScriptData::on(Server& server) { }
+
+}
