@@ -6,10 +6,10 @@
 #include "game/Player/PlayerAnimator.h"
 #include "helpers/GetHelper.h"
 #include "helpers/fsHelper.h"
-#include "nn/fs/fs_directories.hpp"
-#include "nn/fs/fs_files.hpp"
-#include "nn/fs/fs_mount.hpp"
-#include "nn/fs/fs_types.hpp"
+#include "nn/fs/fs_directories.h"
+#include "nn/fs/fs_files.h"
+#include "nn/fs/fs_mount.h"
+#include "nn/fs/fs_types.h"
 #include "logger/Logger.hpp"
 #include "smo-tas/TAS.h"
 #include <heap/seadHeapMgr.h>
@@ -148,7 +148,7 @@ void GhostManager::exeRecord() {
         return;
     }
     Logger::log("    TAS is still running!\n");
-    sead::SafeString pAnim = mPlayer->mAnimator->curAnim;
+    sead::SafeString pAnim = mPlayer->mAnimator->mCurAnim;
     Logger::log("    Player Animation: %s\n", pAnim.cstr());
     const char* capAnim = al::getActionName(mPlayer->mHackCap);
     Logger::log("    Cap Anim: %s\n", capAnim);

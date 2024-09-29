@@ -15,7 +15,7 @@
 
 #include "Library/Yaml/ByamlIter.h"
 
-#include "nn/fs/fs_directories.hpp"
+#include "nn/fs/fs_directories.h"
 
 #include "sead/container/seadPtrArray.h"
 

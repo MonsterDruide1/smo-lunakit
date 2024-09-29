@@ -3,7 +3,7 @@
 #include "InputFrame.h"
 #include "Library/Nerve/NerveExecutor.h"
 #include "Library/Scene/Scene.h"
-#include "nn/fs/fs_types.hpp"
+#include "nn/fs/fs_types.h"
 #include "heap/seadDisposer.h"
 
 #define TAS_SCRIPTPATH "sd:/smo/tas/scripts"

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "vapours/results.hpp"
-#include "fs_types.hpp"
+#include "fs_types.h"
 
 namespace nn::fs {
     /*

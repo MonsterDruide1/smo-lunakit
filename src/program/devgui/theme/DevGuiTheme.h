@@ -19,7 +19,7 @@
 
 #include "Library/Yaml/ByamlIter.h"
 
-#include "nn/fs/fs_directories.hpp"
+#include "nn/fs/fs_directories.h"
 #include "nn/oe.h"
 
 class DevGuiManager; // Forward declaration (include is in cpp file)

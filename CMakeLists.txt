@@ -24,6 +24,10 @@ add_compile_definitions(EXL_PROGRAM_ID=${CONFIG_TITLE_ID} NNSDK=1 IMGUI_USER_CON
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/module/subsdk9.json.template ${CMAKE_CURRENT_BINARY_DIR}/subsdk9.json)
 
 ## Libraries
+include_directories(${PROJECT_SOURCE_DIR}/lib/smo-replace)
+include_directories(${PROJECT_SOURCE_DIR}/lib/smo-replace/al)
+include_directories(${PROJECT_SOURCE_DIR}/lib/smo-replace/game)
+include_directories(${PROJECT_SOURCE_DIR}/lib/smo-replace/sead)
 include_directories(${PROJECT_SOURCE_DIR}/lib/custom)
 include_directories(${PROJECT_SOURCE_DIR}/lib/custom/sead)
 include_directories(${PROJECT_SOURCE_DIR}/lib/custom/agl)

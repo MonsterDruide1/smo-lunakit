@@ -19,7 +19,7 @@
 
 #define CUSTOMSTAGEPATH "sd:/LunaKit/LKData/CustomStages/"
 
-#include "nn/fs/fs_directories.hpp"
+#include "nn/fs/fs_directories.h"
 
 #include "CustomStage.h"
 

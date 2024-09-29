@@ -3,7 +3,6 @@
 #include "Library/LiveActor/LiveActor.h"
 #include "Library/Thread/FunctorV0M.h"
 #include "al/layout/BalloonMessage.h"
-#include "Library/Base/String.h"
 #include "al/util.hpp"
 
 #include "game/Player/PlayerConst.h"
